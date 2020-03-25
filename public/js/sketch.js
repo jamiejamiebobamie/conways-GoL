@@ -3,17 +3,22 @@
 let canvas;
 let grid;
 let button;
+let snapshotContainer;
 
 // constants that control the size of the p5.js canvas
 let canvasDivisorWidth = 15;
 let canvasDivisorHeight = 5;
 
-let doOnce = true;
+// testing
+let doAmount = 10;
+let doCount = 0;
+let snapshots = []
 
 // p5.js built-in method
 function setup() {
     recreateCanvas();
     canvas.parent('sketch-holder');
+    // centers the canvas
     imageMode(CENTER);
 }
 
@@ -29,6 +34,7 @@ function draw () {
   grid.updatePopulation();
   grid.draw();
   button.draw();
+  snapshotContainer.draw()
 }
 
 function recreateCanvas(){
@@ -41,14 +47,16 @@ function recreateCanvas(){
     button = new Button(widthOfCanvas, heightOfCanvas);
     grid = new Grid(widthOfCanvas, heightOfCanvas);
     grid.randomizeCellState();
+    snapshotContainer = new SnapshotHolder(widthOfCanvas, heightOfCanvas, snapshots);
 
-    if (doOnce){
-        printColors();
-        doOnce = false;
+    if (doCount < doAmount){
+        addToSnapshots();
+        doCount++;
     }
 }
 
-function printColors(){
+function addToSnapshots(snapshot){
     colors = grid.returnColors();
-    console.log(colors);
-}
+    snapshots.push(colors);
+    console.log(snapshots)
+    }
