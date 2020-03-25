@@ -1,20 +1,19 @@
 class Grid {
-    constructor (cellSize) {
+    constructor (width, height, cellSize) {
         this.cellSize = cellSize;
-        this.numberOfColumns = int(width / this.cellSize);
-        this.numberOfRows = int(height / this.cellSize);
+        this.numberOfColumns = int( height / this.cellSize);
+        this.numberOfRows = int( width / this.cellSize);
         this.cells = new Array(this.numberOfRows);
         for (let i = 0; i < this.numberOfRows; i++) {
             this.cells[i] = new Array(this.numberOfColumns);
         }
 
-        for (var column = 0; column < this.numberOfRows; column++) {
-            for (var row = 0; row < this.numberOfColumns; row++) {
-              this.cells[column][row] = new Cell(column, row, cellSize);
+            for (var row = 0; row < this.numberOfRows; row++) {
+                for (var column = 0; column < this.numberOfColumns; column++) {
+                  this.cells[row][column] = new Cell(row,column, cellSize);
             }
         }
         this.currentGeneration = 0;
-
         this.play = true;
         this.fastForward = false;
         this.rewind = false;

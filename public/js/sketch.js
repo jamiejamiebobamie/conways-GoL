@@ -3,32 +3,35 @@
 
 // const Grid = require('./Grid.js');
 
-var grid;
+let grid;
+let cellSize;
 
 console.log(Grid);
 
 function setup() {
     var canvas = createCanvas(windowWidth, windowHeight);
 
-    if (windowWidth < 2000){
-        canvas = createCanvas(windowWidth, windowHeight);
-    } else {
-        canvas = createCanvas(2000, windowHeight);
-    }
-
     canvas.parent('sketch-holder');
     imageMode(CENTER);
 
-    grid = new Grid(100); //20
+    if (windowWidth > windowHeight){
+        cellSize = windowWidth/35
+    } else {
+        cellSize = windowHeight/35
+    }
+
+    grid = new Grid(windowWidth, windowHeight, 40); //20
     grid.randomize();
 }
 
 function windowResized() {
-    if (windowWidth < 2000){
-        resizeCanvas(windowWidth, windowHeight);
+    if (windowWidth > windowHeight){
+        cellSize = windowWidth/35
     } else {
-        resizeCanvas(2000, windowHeight);
+        cellSize = windowHeight/35
     }
+    grid = new Grid(windowWidth, windowHeight, 40); //20
+    grid.randomize();
 }
 
 function draw () {
