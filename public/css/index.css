@@ -1,27 +1,14 @@
 body {
- /* background-color: #f9f9f9;
- font-family: courier;
- font-style: normal;
- padding: 15px;
- margin: 40px; */
- display:flex;
- flex-direction: column;
- justify-content: space-around;
- /* display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center; */
- /* align-content : center */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: blue; */
 }
 
-#sketch-holder{
-
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
-    margin-bottom:auto;
-    align-content: center;
-
-
+.sketch-holder{
+    display: flex;
+    align-self: center;
+    /* background-color: red; */
+    margin-top: 2vh;
+    margin-bottom: auto;
 }

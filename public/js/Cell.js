@@ -26,6 +26,7 @@ class Cell {
     }
   }
 
+
   liveOrDie () {
     if (this.isAlive === true && this.liveNeighborCount < 2 || this.isAlive === true && this.liveNeighborCount > 3) {
       this.isAlive = false;
@@ -45,6 +46,3 @@ class Cell {
     rect(this.column * this.cellSize + 1, this.row * this.cellSize + 1, this.cellSize - 1, this.cellSize - 1);
   }
 }
-
-
-// exports.Cell = Cell;
