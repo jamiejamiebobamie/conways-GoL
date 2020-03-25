@@ -1,26 +1,39 @@
+
+let cellDivisor = 25;
+
 class Grid {
-    constructor (width, height, cellSize) {
-        this.cellSize = cellSize;
-        this.numberOfColumns = int( width / this.cellSize);
-        this.numberOfRows = int( height / this.cellSize);
+    constructor (widthOfCanvas, heightOfCanvas) {
+        this.width = widthOfCanvas;
+        this.height = heightOfCanvas - heightOfCanvas / 4;
+
+        if (widthOfCanvas > heightOfCanvas){
+            this.cellSize = widthOfCanvas/cellDivisor;
+        } else {
+            this.cellSize = heightOfCanvas/cellDivisor;
+        }
+
+        this.numberOfColumns = int( this.width / this.cellSize);
+        this.numberOfRows = int( this.height / this.cellSize);
 
         this.cells = new Array(this.numberOfColumns);
+        this.colors = new Array(this.numberOfColumns);
         for (let i = 0; i < this.numberOfColumns; i++) {
             this.cells[i] = new Array(this.numberOfRows);
+            this.colors[i] = new Array(this.numberOfRows);
         }
 
         for (var column = 0; column < this.numberOfColumns; column ++) {
           for (var row = 0; row < this.numberOfRows; row++) {
-              this.cells[column][row] = new Cell(column, row, cellSize);
+              this.cells[column][row] = new Cell(column, row, this.cellSize);
             }
-
+        }
         this.currentGeneration = 0;
         this.play = true;
         this.fastForward = false;
         this.rewind = false;
     }
-}
-    randomize () {
+
+    randomizeCellState() {
         this.currentGeneration = 0;
         for (var column = 0; column < this.numberOfColumns; column ++) {
           for (var row = 0; row < this.numberOfRows; row++) {
@@ -70,7 +83,6 @@ class Grid {
         }
       }
     }
-
 
      cellColor () {
         let colorDivisor = 3.7;
@@ -130,6 +142,18 @@ class Grid {
         }
       }
       }
+    }
+
+    // isn't it usually rows contains columns...
+    returnColors(){
+        let color;
+        for (var column = 0; column < this.numberOfColumns; column ++) {
+          for (var row = 0; row < this.numberOfRows; row++) {
+           color = this.cells[column][row].returnColor();
+           this.colors.push(color);
+          }
+        }
+        return this.colors;
     }
 
       draw () {

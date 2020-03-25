@@ -10,12 +10,25 @@ class Cell {
     this.colorG = 10 * this.row;
     this.colorB = this.column + this.row;
     this.birth = false;
-
-
     this.generation_isAlive = [];
 
     //Initially rewind was meant to be an array that stored this.isAlive per cell each generation, but I couldn't figure out how to play them back with a for loop, despite managing to store them. I tried a number of things...
 
+  }
+
+  returnColor(){
+      let id = {
+          'column': this.column,
+          'row': this.row
+      }
+
+      let colorInfo = {
+          'id': id,
+          'R': this.colorR,
+          'G': this.colorG,
+          'B': this.colorB
+      }
+      return colorInfo
   }
 
   setIsAlive (value) {

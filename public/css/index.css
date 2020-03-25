@@ -2,6 +2,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     /* background-color: blue; */
 }
 
@@ -9,6 +10,7 @@ body {
     display: flex;
     align-self: center;
     /* background-color: red; */
-    margin-top: 2vh;
+    /* margin-top: 2vh; */
     margin-bottom: auto;
+    /* height: 1px; */
 }
