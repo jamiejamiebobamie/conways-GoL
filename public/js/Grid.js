@@ -31,6 +31,10 @@ class Grid {
         this.play = true;
         this.fastForward = false;
         this.rewind = false;
+
+        this.storeGenIn1 = true;
+        this.store1 = undefined;
+        this.store2 = undefined;
     }
 
     randomizeCellState() {
@@ -144,9 +148,8 @@ class Grid {
 
     // isn't it usually rows contains columns...
     returnColors(){
-        let gridColors = new Array(this.numberOfColumns);
+        let gridColors = []
         for (var column = 0; column < this.numberOfColumns; column ++) {
-        gridColors[column] = new Array(this.numberOfRows);
           for (var row = 0; row < this.numberOfRows; row++) {
            let cellColor = this.cells[column][row].returnColor();
            gridColors.push(cellColor);
@@ -155,7 +158,52 @@ class Grid {
         return gridColors;
     }
 
+
+
+    /*
+    need to store every other generation in two variables that flip flop
+    gen1, gen2, gen3, gen4, gen5, gen6, gen7
+    store1      store2      store1      store2
+
+    if store1 == store2:
+    the game has reached its conclusion and needs to be reset.
+
+    */
+    storeTwoGenerations(){
+        if (this.currentGeneration % 2){     //if odd
+            if (this.storeGenIn1){
+                this.store1 = this.returnColors();
+                this.storeGenIn1 = false;
+            } else {
+                this.store2 = this.returnColors();
+                this.storeGenIn1 = true;
+            }
+        }
+    }
+
+    checkForEndState(){
+        let equal = false;
+            // check to make these variables are defined
+            if (this.store1 && this.store2){
+                // check to make sure they have the same length.
+                if (this.store1.length == this.store2.length){
+                    equal = true;
+                    let i = 0;
+                    while (i < this.store1.length && equal){
+                        for (let j = 0; j < this.store1[i].length; j++){
+                            if (this.store1[i][j] != this.store2[i][j]){
+                                equal = false;
+                            }
+                        }
+                        i++;
+                    }
+                }
+            }
+        return equal
+    }
+
       draw () {
+        this.storeTwoGenerations();
           this.updateNeighborCounts();
           this.updatePopulation();
         for (var column = 0; column < this.numberOfColumns; column ++) {

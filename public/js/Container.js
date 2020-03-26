@@ -44,6 +44,10 @@ class GridContainer extends Container{
         this.grid.randomizeCellState();
     }
 
+    checkForEndState(){
+        return this.grid.checkForEndState();
+    }
+
     returnColors(){
         return this.grid.returnColors();
     }
@@ -64,17 +68,17 @@ class UIContainer extends Container{
         super.recreate(widthOfCanvas, heightOfCanvas);
         let row = true;
         this.buttons = [];
-        let about = new AboutButton(0,widthOfCanvas, heightOfCanvas, row, 0, 3);
+        let about = new AboutButton(0,widthOfCanvas, heightOfCanvas, row, 0, 2);
         this.buttons.push(about);
-        let createSnapShot = new CreateSnapShotButton(0,widthOfCanvas, heightOfCanvas, row, 1, 3);
+        let createSnapShot = new CreateSnapShotButton(0,widthOfCanvas, heightOfCanvas, row, 1, 2);
         this.buttons.push(createSnapShot);
-        let refreshButton = new RefreshButton(0,widthOfCanvas, heightOfCanvas, row, 2, 3);
-        this.buttons.push(refreshButton);
+        // let refreshButton = new RefreshButton(0,widthOfCanvas, heightOfCanvas, row, 2, 3);
+        // this.buttons.push(refreshButton);
         return this.buttons;
     }
 
     draw(){
-          for (let i = 0; i < 3; i++){
+          for (let i = 0; i < this.buttons.length; i++){
             this.buttons[i].draw();
         }
     }

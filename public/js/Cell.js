@@ -17,17 +17,19 @@ class Cell {
   }
 
   returnColor(){
-      let id = {
-          'column': this.column,
-          'row': this.row
-      }
+      // let id = {
+      //     'column': this.column,
+      //     'row': this.row
+      // }
+      //
+      // let colorInfo = {
+      //     'id': id,
+      //     'R': this.colorR,
+      //     'G': this.colorG,
+      //     'B': this.colorB
+      // }
 
-      let colorInfo = {
-          'id': id,
-          'R': this.colorR,
-          'G': this.colorG,
-          'B': this.colorB
-      }
+      let colorInfo = [ int(this.column), int(this.row), int(this.colorR), int(this.colorG), int(this.colorB)]
       return colorInfo
   }
 

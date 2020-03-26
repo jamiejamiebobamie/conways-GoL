@@ -38,6 +38,9 @@ function windowResized() {
 
 // p5.js built-in method
 function draw () {
+    if (gridContainer.checkForEndState()){
+        recreateCanvas();
+    }
     gridContainer.draw();
     uiContainer.draw();
     snapshotContainer.draw();
@@ -63,9 +66,12 @@ function recreateCanvas(){
 
     let uiButtons = uiContainer.recreate(widthOfCanvas, heightOfCanvas);
     buttons.push(...uiButtons);
+    console.log(buttons)
 
     let snapshotButtons = snapshotContainer.recreate(widthOfCanvas, heightOfCanvas, snapshots);
     buttons.push(...snapshotButtons);
+    console.log(buttons)
+
 
     containerExtension = 0;
     for (let i = 0; i < containers.length; i++){
@@ -90,7 +96,7 @@ function mouseClicked() {
     // }
     console.log(buttons.length)
     // refresh();
-    // addSnapshot(widthOfCanvas, heightOfCanvas);
+    addSnapshot(widthOfCanvas, heightOfCanvas);
 }
 
 function addSnapshot(){
