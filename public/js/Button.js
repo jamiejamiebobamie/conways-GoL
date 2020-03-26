@@ -16,3 +16,34 @@ class Button {
     }
 
 }
+
+/*
+
+ALL buttons should...
+    be able to orient themselves:
+        row or column?
+        which index in the list of buttons?
+        what's the scope of their container / bounds?
+    have reaction effects to show interactivity:
+        effect on mouseover
+        effect on click
+    have functionality:
+        function on click
+
+individual buttons should...
+    know how big or small they should be based on the the container size
+    how they look, their "icon":
+        if it's a snapshot, it will contain a minified, frozen Grid and Cell classes.
+        if it's another type of button it will contain an approipriate p5.js icon.
+    implement their specific functionality.
+
+what info to pass in?
+    container / bounds info:
+        width
+        height
+    index of button (out of buttons):
+        0 to n-1
+    row or colum:
+        boolean
+
+*/
