@@ -155,6 +155,8 @@ class Grid {
     }
 
       draw () {
+          this.updateNeighborCounts();
+          this.updatePopulation();
         for (var column = 0; column < this.numberOfColumns; column ++) {
           for (var row = 0; row < this.numberOfRows; row++) {
            this.cells[column][row].draw();
