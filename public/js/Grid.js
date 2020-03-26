@@ -135,7 +135,7 @@ class Grid {
           this.cellColor();
         }
        }
-   } else if(this.play === true && frameCount % 100 === 0) {
+   } else if(this.play === true && frameCount % 1 === 0) {
           this.currentGeneration = this.currentGeneration + 1;
         for (this.column = 0; this.column < this.numberOfColumns; this.column ++) {
           for (this.row = 0; this.row < this.numberOfRows; this.row++) {
@@ -183,22 +183,22 @@ class Grid {
 
     checkForEndState(){
         let equal = false;
-            // // check to make these variables are defined
-            // if (this.store1 && this.store2){
-            //     // check to make sure they have the same length.
-            //     if (this.store1.length == this.store2.length){
-            //         equal = true;
-            //         let i = 0;
-            //         while (i < this.store1.length && equal){
-            //             for (let j = 0; j < this.store1[i].length; j++){
-            //                 if (this.store1[i][j] != this.store2[i][j]){
-            //                     equal = false;
-            //                 }
-            //             }
-            //             i++;
-            //         }
-            //     }
-            // }
+            // check to make these variables are defined
+            if (this.store1 && this.store2){
+                // check to make sure they have the same length.
+                if (this.store1.length == this.store2.length){
+                    equal = true;
+                    let i = 0;
+                    while (i < this.store1.length && equal){
+                        for (let j = 0; j < this.store1[i].length; j++){
+                            if (this.store1[i][j] != this.store2[i][j]){
+                                equal = false;
+                            }
+                        }
+                        i++;
+                    }
+                }
+            }
         return equal
     }
 
