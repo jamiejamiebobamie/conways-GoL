@@ -11,6 +11,11 @@ class Container{
         this.randomColor = (getRandomInt(256))
     }
 
+    recreate(widthOfCanvas, heightOfCanvas){
+            this.width = widthOfCanvas;
+            this.randomColor = (getRandomInt(256))
+    }
+
     draw(){
         fill(this.randomColor);
         rect(0,this.startingY,this.width,this.length)
@@ -18,6 +23,86 @@ class Container{
 
     getEndingY(){
         return this.startingY + this.length;
+    }
+}
+// let canvasDivisorWidth = 15;
+// let canvasDivisorHeight = 5;
+// widthOfCanvas = windowWidth - windowWidth / canvasDivisorWidth;
+// // need to scale the height of elements based on the windowWidth
+// heightOfCanvas = windowWidth - windowWidth / canvasDivisorHeight
+
+class GridContainer extends Container{
+    constructor(y, length, widthOfCanvas, heightOfCanvas){
+        super(y, length, widthOfCanvas);
+        this.grid = new Grid(widthOfCanvas, heightOfCanvas);
+        this.recreate(widthOfCanvas, heightOfCanvas);
+    }
+
+    recreate(widthOfCanvas, heightOfCanvas){
+        this.grid = new Grid(widthOfCanvas, heightOfCanvas);
+        this.grid.randomizeCellState();
+    }
+
+    draw(){
+        fill(this.randomColor);
+          rect(0,this.startingY,this.width,this.length);
+        this.grid.draw();
+    }
+}
+
+class UIContainer extends Container{
+    constructor(y, length, widthOfCanvas, heightOfCanvas){
+        super(y, length, widthOfCanvas);
+        this.buttons = []
+        this.recreate(widthOfCanvas, heightOfCanvas);
+    }
+
+    recreate(widthOfCanvas, heightOfCanvas){
+        let row = true;
+        this.buttons = [];
+        let numButtons = this.buttons.length;
+        for (let i = 0; i < 3; i++){
+            let button = new Button(0,widthOfCanvas, heightOfCanvas, row, i, 3);
+            this.buttons.push(button);
+        }
+    }
+
+    draw(){
+        fill(this.randomColor);
+          rect(0,this.startingY,this.width,this.length);
+          // rect(0,200,200,200);
+          // noStroke();
+
+          for (let i = 0; i < 3; i++){
+            this.buttons[i].draw();
+        }
+    }
+}
+
+class SnapshotContainer extends Container{
+    constructor(y, length, widthOfCanvas, heightOfCanvas){
+        super(y, length, widthOfCanvas);
+        this.snapshots = []
+        this.numSnapshots = 5;
+        this.recreate(widthOfCanvas, heightOfCanvas);
+    }
+
+    recreate(widthOfCanvas, heightOfCanvas){
+
+        let row = false;
+        this.snapshots = [];
+        for (let i = 0; i < this.numSnapshots; i++){
+            let button = new Button(this.getEndingY(), widthOfCanvas, heightOfCanvas, row, i, this.numSnapshots);
+            this.snapshots.push(button);
+        }
+    }
+
+    draw(){
+        fill(this.randomColor);
+          rect(0,this.startingY,this.width,this.length);
+          for (let i = 0; i < this.numSnapshots; i++){
+            this.snapshots[i].draw();
+        }
     }
 }
 

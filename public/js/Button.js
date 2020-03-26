@@ -1,7 +1,7 @@
 
 // button base class
 class Button {
-    constructor(widthOfContainer, heightOfContainer, row, index, lenButtons){
+    constructor(offset, widthOfContainer, heightOfContainer, row, index, lenButtons){
         // True = row, False = column
         this.orientation = row;
         // the number of buttons in the container
@@ -16,7 +16,7 @@ class Button {
             this.y = heightOfContainer - (heightOfContainer / 5);
         } else {
             this.x = widthOfContainer / 2;
-            this.y = index * heightOfContainer / lenButtons;
+            this.y = offset + index * heightOfContainer / lenButtons;
         }
 
         this.width = 20;

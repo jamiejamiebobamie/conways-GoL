@@ -2,14 +2,12 @@
 // objects to be instantiated
 let canvas;
 let grid;
-let buttons = []
 
 // testing
 let containers = [];
 let gridContainer;
 let uiContainer;
 let snapshotContainer;
-
 
 // constants that control the size of the p5.js canvas
 let widthOfCanvas;
@@ -20,25 +18,16 @@ let containerExtension;
 
 // p5.js built-in method
 function setup() {
+    gridContainer = new GridContainer(0,400,windowWidth, windowHeight);
+    containers.push(gridContainer);
+    uiContainer = new UIContainer(gridContainer.getEndingY(),100,windowWidth, windowHeight);
+    containers.push(uiContainer);
+    snapshotContainer = new SnapshotContainer(uiContainer.getEndingY(),500,windowWidth, windowHeight);
+    containers.push(snapshotContainer);
     recreateCanvas();
     canvas.parent('sketch-holder');
     // centers the canvas
     imageMode(CENTER);
-
-    // containers = []
-    // containerTest1 = new Container(0,20,windowWidth);
-    // containerTest2 = new Container(containerTest1.getEndingY(),40,windowWidth);
-    // containerTest3 = new Container(containerTest2.getEndingY(),60,windowWidth);
-
-    gridContainer = new GridContainer();
-    containers.push(gridContainer);
-
-    uiContainer = new UIContainer();
-    containers.push(uiContainer);
-
-    snapshotContainer = new SnapshotContainer();
-    containers.push(snapshotContainer);
-
 }
 
 // p5.js built-in method
@@ -48,11 +37,6 @@ function windowResized() {
 
 // p5.js built-in method
 function draw () {
-  background(256,0,0);
-  // grid.draw();
-  // // for (let i = 0; i < buttons.length; i++){
-  // //     buttons[i].draw();
-  // // }
     gridContainer.draw();
     uiContainer.draw();
     snapshotContainer.draw();
@@ -64,32 +48,24 @@ function recreateCanvas(){
         // attempted to make getter/setters for the member variables to
         // reset them after initialization, but the code became too nested.
 
+    // need to scale the height of elements based on the windowWidth
+    // heightOfCanvas = windowWidth - windowWidth / canvasDivisorHeight
+    // need to scale the heightOfCanvas based on the collective height
+        // of all the containers
+
+    widthOfCanvas = windowWidth - windowWidth / canvasDivisorWidth;
+    heightOfCanvas = windowWidth - windowWidth / canvasDivisorHeight
+
+    gridContainer.recreate(widthOfCanvas, heightOfCanvas);
+    uiContainer.recreate(widthOfCanvas, heightOfCanvas);
+    snapshotContainer.recreate(widthOfCanvas, heightOfCanvas);
     containerExtension = 0;
     for (let i = 0; i < containers.length; i++){
         containerExtension+=containers[i].getEndingY();
     }
 
-    widthOfCanvas = windowWidth - windowWidth / canvasDivisorWidth;
-    // need to scale the height of elements based on the windowWidth
-    heightOfCanvas = windowWidth - windowWidth / canvasDivisorHeight
-    // need to scale the heightOfCanvas based on the collective height
-        // of all the containers
     heightOfCanvas = containerExtension;
     canvas = createCanvas(widthOfCanvas, heightOfCanvas);
-
-    gridContainer.recreate();
-    uiContainer.recreate();
-    snapshotContainer.recreate();
-
-    // row = true;
-    // numButtons = 3
-    // buttons = []
-    // for (let i = 0; i < numButtons; i++){
-    //     button = new Button(widthOfCanvas, heightOfCanvas, row, i, numButtons);
-    //     buttons.push(button);
-    // }
-    grid = new Grid(widthOfCanvas, heightOfCanvas);
-    grid.randomizeCellState();
 }
 
 function addToSnapshots(snapshot){
