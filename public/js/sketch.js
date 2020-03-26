@@ -12,6 +12,8 @@ let snapshotContainer;
 
 
 // constants that control the size of the p5.js canvas
+let widthOfCanvas;
+let heightOfCanvas;
 let canvasDivisorWidth = 15;
 let canvasDivisorHeight = 5;
 let containerExtension;
@@ -22,6 +24,21 @@ function setup() {
     canvas.parent('sketch-holder');
     // centers the canvas
     imageMode(CENTER);
+
+    // containers = []
+    // containerTest1 = new Container(0,20,windowWidth);
+    // containerTest2 = new Container(containerTest1.getEndingY(),40,windowWidth);
+    // containerTest3 = new Container(containerTest2.getEndingY(),60,windowWidth);
+
+    gridContainer = new GridContainer();
+    containers.push(gridContainer);
+
+    uiContainer = new UIContainer();
+    containers.push(uiContainer);
+
+    snapshotContainer = new SnapshotContainer();
+    containers.push(snapshotContainer);
+
 }
 
 // p5.js built-in method
@@ -32,13 +49,13 @@ function windowResized() {
 // p5.js built-in method
 function draw () {
   background(256,0,0);
-  grid.draw();
-  // for (let i = 0; i < buttons.length; i++){
-  //     buttons[i].draw();
-  // }
-    // gridContainer.draw();
-    // uiContainer.draw();
-    // snapshotContainer.draw();
+  // grid.draw();
+  // // for (let i = 0; i < buttons.length; i++){
+  // //     buttons[i].draw();
+  // // }
+    gridContainer.draw();
+    uiContainer.draw();
+    snapshotContainer.draw();
 }
 
 function recreateCanvas(){
@@ -47,24 +64,22 @@ function recreateCanvas(){
         // attempted to make getter/setters for the member variables to
         // reset them after initialization, but the code became too nested.
 
-    containers = []
-    containerTest1 = new Container(0,20,windowWidth);
-    containerTest2 = new Container(containerTest1.getEndingY(),40,windowWidth);
-    containerTest3 = new Container(containerTest2.getEndingY(),60,windowWidth);
-
-    containers.push(containerTest1);
-    containers.push(containerTest2);
-    containers.push(containerTest3);
-
     containerExtension = 0;
     for (let i = 0; i < containers.length; i++){
         containerExtension+=containers[i].getEndingY();
     }
 
-    let widthOfCanvas = windowWidth - windowWidth / canvasDivisorWidth;
-    let heightOfCanvas = containerExtension;
-    console.log(heightOfCanvas,containerExtension)
+    widthOfCanvas = windowWidth - windowWidth / canvasDivisorWidth;
+    // need to scale the height of elements based on the windowWidth
+    heightOfCanvas = windowWidth - windowWidth / canvasDivisorHeight
+    // need to scale the heightOfCanvas based on the collective height
+        // of all the containers
+    heightOfCanvas = containerExtension;
     canvas = createCanvas(widthOfCanvas, heightOfCanvas);
+
+    gridContainer.recreate();
+    uiContainer.recreate();
+    snapshotContainer.recreate();
 
     // row = true;
     // numButtons = 3
