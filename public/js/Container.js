@@ -17,8 +17,8 @@ class Container{
     }
 
     draw(){
-        fill(this.randomColor);
-        rect(0,this.startingY,this.width,this.length)
+        // fill(this.randomColor);
+        // rect(0,this.startingY,this.width,this.length)
     }
 
     getEndingY(){
@@ -39,13 +39,16 @@ class GridContainer extends Container{
     }
 
     recreate(widthOfCanvas, heightOfCanvas){
+        super.recreate(widthOfCanvas, heightOfCanvas);
         this.grid = new Grid(widthOfCanvas, heightOfCanvas);
         this.grid.randomizeCellState();
     }
 
+    returnColors(){
+        return this.grid.returnColors();
+    }
+
     draw(){
-        fill(this.randomColor);
-          rect(0,this.startingY,this.width,this.length);
         this.grid.draw();
     }
 }
@@ -53,26 +56,24 @@ class GridContainer extends Container{
 class UIContainer extends Container{
     constructor(y, length, widthOfCanvas, heightOfCanvas){
         super(y, length, widthOfCanvas);
-        this.buttons = []
+        this.buttons = [];
         this.recreate(widthOfCanvas, heightOfCanvas);
     }
 
     recreate(widthOfCanvas, heightOfCanvas){
+        super.recreate(widthOfCanvas, heightOfCanvas);
         let row = true;
         this.buttons = [];
-        let numButtons = this.buttons.length;
-        for (let i = 0; i < 3; i++){
-            let button = new Button(0,widthOfCanvas, heightOfCanvas, row, i, 3);
-            this.buttons.push(button);
-        }
+        let about = new AboutButton(0,widthOfCanvas, heightOfCanvas, row, 0, 3);
+        this.buttons.push(about);
+        let createSnapShot = new CreateSnapShotButton(0,widthOfCanvas, heightOfCanvas, row, 1, 3);
+        this.buttons.push(createSnapShot);
+        let refreshButton = new RefreshButton(0,widthOfCanvas, heightOfCanvas, row, 2, 3);
+        this.buttons.push(refreshButton);
+        return this.buttons;
     }
 
     draw(){
-        fill(this.randomColor);
-          rect(0,this.startingY,this.width,this.length);
-          // rect(0,200,200,200);
-          // noStroke();
-
           for (let i = 0; i < 3; i++){
             this.buttons[i].draw();
         }
@@ -80,28 +81,33 @@ class UIContainer extends Container{
 }
 
 class SnapshotContainer extends Container{
-    constructor(y, length, widthOfCanvas, heightOfCanvas){
+    constructor(y, length, widthOfCanvas, heightOfCanvas, snapshots){
         super(y, length, widthOfCanvas);
-        this.snapshots = []
-        this.numSnapshots = 5;
+        this.snapshots = snapshots
+        // for testing
+        this.buttons = []
+        this.numSnapshots = snapshots.length;
         this.recreate(widthOfCanvas, heightOfCanvas);
     }
 
-    recreate(widthOfCanvas, heightOfCanvas){
-
+    recreate(widthOfCanvas, heightOfCanvas, snapshots){
+        super.recreate(widthOfCanvas, heightOfCanvas);
         let row = false;
-        this.snapshots = [];
+        this.buttons = []
         for (let i = 0; i < this.numSnapshots; i++){
             let button = new Button(this.getEndingY(), widthOfCanvas, heightOfCanvas, row, i, this.numSnapshots);
-            this.snapshots.push(button);
+            this.buttons.push(button);
         }
+        return this.buttons;
+    }
+
+    addSnapshot(){
+        this.numSnapshots++;
     }
 
     draw(){
-        fill(this.randomColor);
-          rect(0,this.startingY,this.width,this.length);
           for (let i = 0; i < this.numSnapshots; i++){
-            this.snapshots[i].draw();
+            this.buttons[i].draw();
         }
     }
 }

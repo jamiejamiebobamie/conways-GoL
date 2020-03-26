@@ -51,6 +51,7 @@ class Button {
             return false
         }
     }
+    
     draw(){
     // need to delay the check on this as well as abstract away the functionality.
         // not all buttons will change color on mouseover.
@@ -61,6 +62,51 @@ class Button {
     }
       noStroke();
       rect(this.x, this.y, this.width, this.height, this.borderRadius);
+    }
+}
+
+class CreateSnapShotButton extends Button{
+    constructor(offset, widthOfContainer, heightOfContainer, row, index, lenButtons){
+        super(offset, widthOfContainer, heightOfContainer, row, index, lenButtons);
+    }
+
+    performClickFunctionality(){
+        // super.performClickFunctionality()
+        console.log("you clicked the CreateSnapShotButton")
+    }
+}
+
+class AboutButton extends Button{
+    constructor(offset, widthOfContainer, heightOfContainer, row, index, lenButtons){
+        super(offset, widthOfContainer, heightOfContainer, row, index, lenButtons);
+    }
+
+    performClickFunctionality(){
+        // super.performClickFunctionality()
+        console.log("you clicked the AboutButton")
+    }
+}
+
+
+class RefreshButton extends Button{
+    constructor(offset, widthOfContainer, heightOfContainer, row, index, lenButtons){
+        super(offset, widthOfContainer, heightOfContainer, row, index, lenButtons);
+    }
+
+    performClickFunctionality(){
+        // super.performClickFunctionality()
+        console.log("you clicked the RefreshButton")
+    }
+}
+
+class InspectSnapShotButton extends Button{
+    constructor(offset, widthOfContainer, heightOfContainer, row, index, lenButtons){
+        super(offset, widthOfContainer, heightOfContainer, row, index, lenButtons);
+    }
+
+    performClickFunctionality(){
+        // super.performClickFunctionality()
+        console.log("you clicked the InspectSnapShotButton")
     }
 }
 

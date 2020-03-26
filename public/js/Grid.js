@@ -16,10 +16,10 @@ class Grid {
         this.numberOfRows = int( this.height / this.cellSize);
 
         this.cells = new Array(this.numberOfColumns);
-        this.colors = new Array(this.numberOfColumns);
+        // this.colors = new Array(this.numberOfColumns);
         for (let i = 0; i < this.numberOfColumns; i++) {
             this.cells[i] = new Array(this.numberOfRows);
-            this.colors[i] = new Array(this.numberOfRows);
+            // this.colors[i] = new Array(this.numberOfRows);
         }
 
         for (var column = 0; column < this.numberOfColumns; column ++) {
@@ -144,14 +144,15 @@ class Grid {
 
     // isn't it usually rows contains columns...
     returnColors(){
-        let color;
+        let gridColors = new Array(this.numberOfColumns);
         for (var column = 0; column < this.numberOfColumns; column ++) {
+        gridColors[column] = new Array(this.numberOfRows);
           for (var row = 0; row < this.numberOfRows; row++) {
-           color = this.cells[column][row].returnColor();
-           this.colors.push(color);
+           let cellColor = this.cells[column][row].returnColor();
+           gridColors.push(cellColor);
           }
         }
-        return this.colors;
+        return gridColors;
     }
 
       draw () {

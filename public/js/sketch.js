@@ -1,20 +1,21 @@
 
-// objects to be instantiated
 let canvas;
-let grid;
 
-// testing
 let containers = [];
 let gridContainer;
 let uiContainer;
 let snapshotContainer;
+
+snapshots = [];
+
+buttons = [];
 
 // constants that control the size of the p5.js canvas
 let widthOfCanvas;
 let heightOfCanvas;
 let canvasDivisorWidth = 15;
 let canvasDivisorHeight = 5;
-let containerExtension;
+let containerExtension = 0;
 
 // p5.js built-in method
 function setup() {
@@ -22,7 +23,7 @@ function setup() {
     containers.push(gridContainer);
     uiContainer = new UIContainer(gridContainer.getEndingY(),100,windowWidth, windowHeight);
     containers.push(uiContainer);
-    snapshotContainer = new SnapshotContainer(uiContainer.getEndingY(),500,windowWidth, windowHeight);
+    snapshotContainer = new SnapshotContainer(uiContainer.getEndingY(),500,windowWidth, windowHeight, snapshots);
     containers.push(snapshotContainer);
     recreateCanvas();
     canvas.parent('sketch-holder');
@@ -57,26 +58,49 @@ function recreateCanvas(){
     heightOfCanvas = windowWidth - windowWidth / canvasDivisorHeight
 
     gridContainer.recreate(widthOfCanvas, heightOfCanvas);
-    uiContainer.recreate(widthOfCanvas, heightOfCanvas);
-    snapshotContainer.recreate(widthOfCanvas, heightOfCanvas);
+
+    buttons = [];
+
+    let uiButtons = uiContainer.recreate(widthOfCanvas, heightOfCanvas);
+    buttons.push(...uiButtons);
+
+    let snapshotButtons = snapshotContainer.recreate(widthOfCanvas, heightOfCanvas, snapshots);
+    buttons.push(...snapshotButtons);
+
     containerExtension = 0;
     for (let i = 0; i < containers.length; i++){
         containerExtension+=containers[i].getEndingY();
     }
 
-    heightOfCanvas = containerExtension;
+    heightOfCanvas = containerExtension + snapshots.length * 100;
     canvas = createCanvas(widthOfCanvas, heightOfCanvas);
 }
 
-function addToSnapshots(snapshot){
-    colors = grid.returnColors();
+function mouseClicked() {
+
+    // let result;
+    // clickLocation = { 'x': mouseX, 'y' : mouseY };
+    // for (let i = 0; i < buttons.length; i++){
+    //     if (buttons[i].testForClick(clickLocation)){
+    //         result = buttons[i].performClickFunctionality()
+    //     }
+    // }
+    // if (result){
+    //
+    // }
+    console.log(buttons.length)
+    // refresh();
+    // addSnapshot(widthOfCanvas, heightOfCanvas);
 }
 
-function mouseClicked() {
-    clickLocation = { 'x': mouseX, 'y' : mouseY };
-    for (let i = 0; i < buttons.length; i++){
-        if (buttons[i].testForClick(clickLocation)){
-            buttons[i].performClickFunctionality()
-        }
-    }
+function addSnapshot(){
+    let snapshot = returnColors();
+    snapshots.push(snapshot);
+    snapshotContainer.addSnapshot();
+    // recreateCanvas();
+    snapshotContainer.recreate(widthOfCanvas, heightOfCanvas, snapshots);
+}
+
+function returnColors(){
+    return gridContainer.returnColors();
 }
