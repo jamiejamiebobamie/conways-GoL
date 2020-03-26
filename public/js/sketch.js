@@ -19,7 +19,7 @@ let containerExtension = 0;
 
 // p5.js built-in method
 function setup() {
-    gridContainer = new GridContainer(0,400,windowWidth, windowHeight);
+    gridContainer = new GridContainer(0,1000,windowWidth, windowHeight);
     containers.push(gridContainer);
     uiContainer = new UIContainer(gridContainer.getEndingY(),100,windowWidth, windowHeight);
     containers.push(uiContainer);
@@ -40,6 +40,7 @@ function windowResized() {
 function draw () {
     if (gridContainer.checkForEndState()){
         recreateCanvas();
+        // setTimeout(recreateCanvas, 5000);
     }
     gridContainer.draw();
     uiContainer.draw();
