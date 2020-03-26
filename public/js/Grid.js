@@ -85,6 +85,7 @@ class Grid {
     }
 
      cellColor () {
+        //dividing by 3 wasn't giving me the colors I wanted:
         let colorDivisor = 3.7;
         for (var column = 0; column < this.numberOfColumns; column ++) {
           for (var row = 0; row < this.numberOfRows; row++) {
@@ -100,9 +101,6 @@ class Grid {
               this.cells[column][row].colorR = this.cells[column][row].colorR / colorDivisor;
               this.cells[column][row].colorG = this.cells[column][row].colorG / colorDivisor;
               this.cells[column][row].colorB = this.cells[column][row].colorB / colorDivisor;
-
-             //dividing by 3 wasn't giving me the colors I wanted. (3.6)
-
               this.cells[column][row].birth = false;
             }
           }

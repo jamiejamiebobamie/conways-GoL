@@ -2,17 +2,11 @@
 // objects to be instantiated
 let canvas;
 let grid;
-let button;
-let snapshotContainer;
+let buttons = []
 
 // constants that control the size of the p5.js canvas
 let canvasDivisorWidth = 15;
 let canvasDivisorHeight = 5;
-
-// testing
-let doAmount = 10;
-let doCount = 0;
-let snapshots = []
 
 // p5.js built-in method
 function setup() {
@@ -29,12 +23,13 @@ function windowResized() {
 
 // p5.js built-in method
 function draw () {
-  background(256);
+  background(256,0,0);
   grid.updateNeighborCounts();
   grid.updatePopulation();
   grid.draw();
-  button.draw();
-  snapshotContainer.draw()
+  for (let i = 0; i < buttons.length; i++){
+      buttons[i].draw();
+  }
 }
 
 function recreateCanvas(){
@@ -44,19 +39,27 @@ function recreateCanvas(){
     // creating new objects everytime the window is resized is bad.
         // attempted to make getter/setters for the member variables to
         // reset them after initialization, but the code became too nested.
-    button = new Button(widthOfCanvas, heightOfCanvas);
+    row = true;
+    numButtons = 3
+    buttons = []
+    for (let i = 0; i < numButtons; i++){
+        button = new Button(widthOfCanvas, heightOfCanvas, row, i, numButtons);
+        buttons.push(button);
+    }
     grid = new Grid(widthOfCanvas, heightOfCanvas);
     grid.randomizeCellState();
-    snapshotContainer = new SnapshotHolder(widthOfCanvas, heightOfCanvas, snapshots);
-
-    if (doCount < doAmount){
-        addToSnapshots();
-        doCount++;
-    }
 }
 
 function addToSnapshots(snapshot){
     colors = grid.returnColors();
-    snapshots.push(colors);
-    console.log(snapshots)
+    // snapshots.push(colors);
+}
+
+function mouseClicked() {
+    clickLocation = { 'x': mouseX, 'y' : mouseY };
+    for (let i = 0; i < buttons.length; i++){
+        if (buttons[i].testForClick(clickLocation)){
+            buttons[i].performClickFunctionality()
+        }
     }
+}

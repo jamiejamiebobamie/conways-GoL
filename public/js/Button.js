@@ -1,20 +1,67 @@
+
+// button base class
 class Button {
-    constructor(canvasWidth, canvasHeight){
-        this.height = canvasWidth/5;
-        this.width = canvasWidth/5;
-        this.x = canvasWidth/2 - canvasWidth/10;
-        this.y = canvasHeight - canvasHeight/5;
+    constructor(widthOfContainer, heightOfContainer, row, index, lenButtons){
+        // True = row, False = column
+        this.orientation = row;
+        // the number of buttons in the container
+        this.lenOfButtons = lenButtons;
+        // index of this button
+        this.index = index;
+
+        // the placement of the button on the canvas based on the orientation
+            //  and the bounds of the container.
+        if (this.orientation){
+            this.x = index * widthOfContainer / lenButtons + (widthOfContainer/(lenButtons*2));
+            this.y = heightOfContainer - (heightOfContainer / 5);
+        } else {
+            this.x = widthOfContainer / 2;
+            this.y = index * heightOfContainer / lenButtons;
+        }
+
+        this.width = 20;
+        this.height = 20;
         this.borderRadius = 40;
+        this.mouseOver = false;
+        this.color = 'black';
+        this.mouseOverColor = 'blue';
     }
 
-    // https://p5js.org/examples/instance-mode-instance-container.html
-    // https://p5js.org/reference/#/p5/saveCanvas
+    performClickFunctionality(){
+            // do function
+            console.log(this.index);
+    }
+
+    testForClick(clickLocation){
+        if (clickLocation.x > this.x - this.borderRadius
+            && clickLocation.x < this.x + this.borderRadius
+            && clickLocation.y > this.y - this.borderRadius
+            && clickLocation.y < this.borderRadius + this.y){
+            return true;
+        }
+    }
+
+    testForMouseOver(mouseX, mouseY){
+        if (mouseX > this.x - this.borderRadius
+            && mouseX < this.x + this.borderRadius
+            && mouseY > this.y - this.borderRadius
+            && mouseY < this.borderRadius + this.y){
+                return true
+        } else {
+            return false
+        }
+    }
     draw(){
-      fill(240);
+    // need to delay the check on this as well as abstract away the functionality.
+        // not all buttons will change color on mouseover.
+    if (this.testForMouseOver(mouseX, mouseY)){
+        fill(this.mouseOverColor);
+    } else {
+        fill(this.color);
+    }
       noStroke();
       rect(this.x, this.y, this.width, this.height, this.borderRadius);
     }
-
 }
 
 /*
